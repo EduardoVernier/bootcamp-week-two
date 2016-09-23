@@ -36,7 +36,7 @@ public class QuoteAdapter extends RecyclerView.Adapter<QuoteAdapter.ViewHolder> 
 
 		holder.item = adapterQuoteList.get(position);
 		holder.quoteTextView.setText(adapterQuoteList.get(position).getQuote());
-		holder.moviewTextView.setText(adapterQuoteList.get(position).getAuthor());
+		holder.movieTextView.setText(adapterQuoteList.get(position).getAuthor());
 
 		holder.view.setOnClickListener(new View.OnClickListener() {
 			@Override
@@ -58,14 +58,14 @@ public class QuoteAdapter extends RecyclerView.Adapter<QuoteAdapter.ViewHolder> 
 	public class ViewHolder extends RecyclerView.ViewHolder {
 		public final View view;
 		public final TextView quoteTextView;
-		public final TextView moviewTextView;
+		public final TextView movieTextView;
 		public Quote item;
 
 		public ViewHolder(View view) {
 			super(view);
 			this.view = view;
 			quoteTextView = (TextView) view.findViewById(R.id.quote_text);
-			moviewTextView = (TextView) view.findViewById(R.id.movie_name);
+			movieTextView = (TextView) view.findViewById(R.id.movie_name);
 		}
 	}
 

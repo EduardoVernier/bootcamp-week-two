@@ -44,6 +44,7 @@ public class QuoteListFragment extends Fragment {
 			recyclerView.setLayoutManager(new LinearLayoutManager(context));
 			recyclerView.setAdapter(adapter);
 		}
+
 		return view;
 	}
 
