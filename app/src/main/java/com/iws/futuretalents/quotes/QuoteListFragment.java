@@ -23,6 +23,7 @@ public class QuoteListFragment extends Fragment
 
 	private List<Quote> quoteList;
 	private QuoteAdapter adapter;
+	private RandomQuoteClient service;
 
 	/**
 	 * Mandatory empty constructor for the fragment manager to instantiate the
@@ -36,24 +37,31 @@ public class QuoteListFragment extends Fragment
 		super.onCreate(savedInstanceState);
 
 		quoteList = new ArrayList<Quote>();
-		adapter = new QuoteAdapter(quoteList, this);
+		adapter = new QuoteAdapter(quoteList, this, getContext());
 
-		RandomQuoteClient service = RandomQuoteClient.retrofit.create(RandomQuoteClient.class);
-		Call<Quote> call = service.getQuote();
-		call.enqueue(new Callback<Quote>() {
+		fetchQuote(5);
+	}
 
-			@Override
-			public void onResponse(Call<Quote> call, Response<Quote> response) {
+	private void fetchQuote(int n) {
+		service = RandomQuoteClient.retrofit.create(RandomQuoteClient.class);
+		for (int i = 0; i < n; i++) {
+			Call<Quote> call = service.getQuote();
+			call.enqueue(new QuoteCallback());
+		}
+	}
 
+	class QuoteCallback implements Callback<Quote> {
+
+		@Override
+		public void onResponse(Call<Quote> call, Response<Quote> response) {
 				Quote newQuote = response.body();
 				newQuote.includeMovieData(quoteList, adapter);
-			}
+		}
 
-			@Override
-			public void onFailure(Call<Quote> call, Throwable t) {
+		@Override
+		public void onFailure(Call<Quote> call, Throwable t) {
 				t.printStackTrace();
-			}
-		});
+		}
 	}
 
 	@Override

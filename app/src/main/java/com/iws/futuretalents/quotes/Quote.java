@@ -41,8 +41,10 @@ public class Quote {
 				// Retrieve response object
 				movieData = response.body();
 				// Add it to quote list inside onResponse to avoid callback/threads synchronization
-				quoteList.add(q);
-				adapter.notifyDataSetChanged();
+				if (movieData.getPoster().equals("N/A") == false) {
+					quoteList.add(q);
+					adapter.notifyDataSetChanged();
+				}
 			}
 
 			@Override

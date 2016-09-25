@@ -1,10 +1,15 @@
 package com.iws.futuretalents.quotes;
 
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
 import java.util.List;
 
@@ -16,11 +21,13 @@ public class QuoteAdapter extends RecyclerView.Adapter<QuoteAdapter.ViewHolder> 
 
 	private final List<Quote> adapterQuoteList;
 	private final OnListFragmentInteractionListener listener;
+	private final Context context;
 
-	public QuoteAdapter(List<Quote> items, OnListFragmentInteractionListener listener) {
+	public QuoteAdapter(List<Quote> items, OnListFragmentInteractionListener listener, Context context) {
 
 		this.adapterQuoteList = items;
 		this.listener = listener;
+		this.context = context;
 	}
 
 	@Override
@@ -37,6 +44,11 @@ public class QuoteAdapter extends RecyclerView.Adapter<QuoteAdapter.ViewHolder> 
 		holder.item = adapterQuoteList.get(position);
 		holder.quoteTextView.setText(adapterQuoteList.get(position).getQuote());
 		holder.movieTextView.setText(adapterQuoteList.get(position).movieData.getTitle());
+
+		Glide.with(context)
+				.load(holder.item.movieData.getPoster())
+				.diskCacheStrategy(DiskCacheStrategy.RESULT)
+				.into(holder.posterImageView);
 
 		holder.view.setOnClickListener(new View.OnClickListener() {
 			@Override
@@ -57,6 +69,7 @@ public class QuoteAdapter extends RecyclerView.Adapter<QuoteAdapter.ViewHolder> 
 
 	public class ViewHolder extends RecyclerView.ViewHolder {
 		public final View view;
+		public final ImageView posterImageView;
 		public final TextView quoteTextView;
 		public final TextView movieTextView;
 		public Quote item;
@@ -64,8 +77,9 @@ public class QuoteAdapter extends RecyclerView.Adapter<QuoteAdapter.ViewHolder> 
 		public ViewHolder(View view) {
 			super(view);
 			this.view = view;
-			quoteTextView = (TextView) view.findViewById(R.id.quote_text);
-			movieTextView = (TextView) view.findViewById(R.id.movie_name);
+			quoteTextView = (TextView) view.findViewById(R.id.list_quote);
+			movieTextView = (TextView) view.findViewById(R.id.list_title);
+			posterImageView = (ImageView) view.findViewById(R.id.list_poster);
 		}
 	}
 
