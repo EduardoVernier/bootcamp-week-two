@@ -36,7 +36,7 @@ public class QuoteAdapter extends RecyclerView.Adapter<QuoteAdapter.ViewHolder> 
 
 		holder.item = adapterQuoteList.get(position);
 		holder.quoteTextView.setText(adapterQuoteList.get(position).getQuote());
-		holder.movieTextView.setText(adapterQuoteList.get(position).getAuthor());
+		holder.movieTextView.setText(adapterQuoteList.get(position).movieData.getTitle());
 
 		holder.view.setOnClickListener(new View.OnClickListener() {
 			@Override

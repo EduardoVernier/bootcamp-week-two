@@ -8,7 +8,8 @@
         android:id="@+id/movie_cover"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:scaleType="fitCenter"/>
+        android:scaleType="fitCenter"
+        android:src="@mipmap/ic_launcher"/>
 
     <TextView
         android:id="@+id/quote_text"

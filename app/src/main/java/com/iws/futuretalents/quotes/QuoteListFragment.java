@@ -9,10 +9,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.iws.futuretalents.quotes.network.RandomQuoteClient;
+
 import java.util.ArrayList;
 import java.util.List;
 
-public class QuoteListFragment extends Fragment {
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
+public class QuoteListFragment extends Fragment
+		implements QuoteAdapter.OnListFragmentInteractionListener {
 
 	private List<Quote> quoteList;
 	private QuoteAdapter adapter;
@@ -29,7 +36,24 @@ public class QuoteListFragment extends Fragment {
 		super.onCreate(savedInstanceState);
 
 		quoteList = new ArrayList<Quote>();
-		adapter = new QuoteAdapter(quoteList, (QuoteAdapter.OnListFragmentInteractionListener) this);
+		adapter = new QuoteAdapter(quoteList, this);
+
+		RandomQuoteClient service = RandomQuoteClient.retrofit.create(RandomQuoteClient.class);
+		Call<Quote> call = service.getQuote();
+		call.enqueue(new Callback<Quote>() {
+
+			@Override
+			public void onResponse(Call<Quote> call, Response<Quote> response) {
+
+				Quote newQuote = response.body();
+				newQuote.includeMovieData(quoteList, adapter);
+			}
+
+			@Override
+			public void onFailure(Call<Quote> call, Throwable t) {
+				t.printStackTrace();
+			}
+		});
 	}
 
 	@Override
@@ -48,7 +72,7 @@ public class QuoteListFragment extends Fragment {
 		return view;
 	}
 
-	void onListFragmentInteraction(Quote item) {
+	public void onListFragmentInteraction(Quote item) {
 
 	}
 }
