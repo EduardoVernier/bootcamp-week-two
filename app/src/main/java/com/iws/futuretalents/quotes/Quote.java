@@ -6,7 +6,6 @@ import com.google.gson.annotations.SerializedName;
 import org.parceler.Parcel;
 
 // All members must be public in order for the Parceler lib to work :/
-// TODO: Clean getters and setters
 @Parcel
 public class Quote {
 
@@ -71,7 +70,7 @@ public class Quote {
 		}
 
 		public String getDirector() {
-			return director;
+			return director + "\n";
 		}
 
 		public void setDirector(String director) {
@@ -79,7 +78,7 @@ public class Quote {
 		}
 
 		public String getWriter() {
-			return writer;
+			return writer + "\n";
 		}
 
 		public void setWriter(String writer) {
@@ -87,7 +86,7 @@ public class Quote {
 		}
 
 		public String getActors() {
-			return actors;
+			return actors + "\n";
 		}
 
 		public void setActors(String actors) {
@@ -95,7 +94,7 @@ public class Quote {
 		}
 
 		public String getPlot() {
-			return plot;
+			return plot + "\n";
 		}
 
 		public void setPlot(String plot) {
@@ -111,7 +110,7 @@ public class Quote {
 		}
 
 		public String getImdbRating() {
-			return imdbRating;
+			return imdbRating + "\n";
 		}
 
 		public void setImdbRating(String imdbRating) {

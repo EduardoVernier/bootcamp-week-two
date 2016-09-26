@@ -2,7 +2,6 @@ package com.iws.futuretalents.quotes;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -34,10 +33,9 @@ public class DetailActivity extends AppCompatActivity {
 
 		quoteText.setText("\"" + quote.getQuote() + "\"");
 		title.setText(quote.getMovieTitle()+" (" + quote.movieData.year + ")");
-		plot.setText(quote.movieData.plot);
-		director.setText(quote.movieData.director);
-		writer.setText(quote.movieData.writer);
-		cast.setText(quote.movieData.actors);
-		Log.v("", quote.movieData.plot);
+		plot.setText(quote.movieData.getPlot());
+		director.setText(quote.movieData.getDirector());
+		writer.setText(quote.movieData.getWriter());
+		cast.setText(quote.movieData.getActors());
 	}
 }
