@@ -10,7 +10,9 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.iws.futuretalents.quotes.network.QuoteService;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -19,15 +21,17 @@ import java.util.List;
  */
 public class QuoteAdapter extends RecyclerView.Adapter<QuoteAdapter.ViewHolder> {
 
-	private final List<Quote> adapterQuoteList;
 	private final OnListFragmentInteractionListener listener;
 	private final Context context;
+	private List<Quote> quoteList;
+	private QuoteService quoteService;
 
-	public QuoteAdapter(List<Quote> items, OnListFragmentInteractionListener listener, Context context) {
-
-		this.adapterQuoteList = items;
+	public QuoteAdapter(OnListFragmentInteractionListener listener, Context context) {
 		this.listener = listener;
 		this.context = context;
+		quoteList = new ArrayList<Quote>();
+		quoteService = new QuoteService(quoteList, this);
+		quoteService.fetchQuote(5);
 	}
 
 	@Override
@@ -41,9 +45,9 @@ public class QuoteAdapter extends RecyclerView.Adapter<QuoteAdapter.ViewHolder> 
 	@Override
 	public void onBindViewHolder(final ViewHolder holder, int position) {
 
-		holder.item = adapterQuoteList.get(position);
-		holder.quoteTextView.setText(adapterQuoteList.get(position).getQuote());
-		holder.movieTextView.setText(adapterQuoteList.get(position).movieData.getTitle());
+		holder.item = quoteList.get(position);
+		holder.quoteTextView.setText("\"" + quoteList.get(position).getQuote() + "\"");
+		holder.titleTextView.setText("- " + quoteList.get(position).movieData.getTitle());
 
 		Glide.with(context)
 				.load(holder.item.movieData.getPoster())
@@ -60,25 +64,33 @@ public class QuoteAdapter extends RecyclerView.Adapter<QuoteAdapter.ViewHolder> 
 				}
 			}
 		});
+
+		// Fetch more quotes when reaching end of list
+		if (position > getItemCount() - 2) {
+			quoteService.fetchQuote(3);
+		}
 	}
+
+
+
 
 	@Override
 	public int getItemCount() {
-		return adapterQuoteList.size();
+		return quoteList.size();
 	}
 
 	public class ViewHolder extends RecyclerView.ViewHolder {
 		public final View view;
 		public final ImageView posterImageView;
 		public final TextView quoteTextView;
-		public final TextView movieTextView;
+		public final TextView titleTextView;
 		public Quote item;
 
 		public ViewHolder(View view) {
 			super(view);
 			this.view = view;
 			quoteTextView = (TextView) view.findViewById(R.id.list_quote);
-			movieTextView = (TextView) view.findViewById(R.id.list_title);
+			titleTextView = (TextView) view.findViewById(R.id.list_title);
 			posterImageView = (ImageView) view.findViewById(R.id.list_poster);
 		}
 	}

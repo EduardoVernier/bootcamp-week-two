@@ -9,8 +9,7 @@ import retrofit2.http.POST;
 import retrofit2.http.Query;
 
 public interface MovieClient {
-	public static final String API_BASE_URL =
-			"http://www.omdbapi.com/";
+	public static final String API_BASE_URL = "http://www.omdbapi.com/";
 
 	@POST("?y=&plot=full&r=json")
 	Call<Quote.Movie> getMovie(@Query("t") String title);

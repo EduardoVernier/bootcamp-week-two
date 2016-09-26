@@ -2,60 +2,23 @@ package com.iws.futuretalents.quotes;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-import com.iws.futuretalents.quotes.network.MovieClient;
-
-import java.util.List;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class Quote {
 
 	@SerializedName("quote")
 	@Expose
 	public String quote;
-
 	@SerializedName("author")
 	@Expose
 	private String movieTitle;
-
 	public Movie movieData;
-
-	/*
-	Since I don't know how to 'join' asynchronous callbacks and I'd like to avoid active waiting
-	on the main/UI thread, new Quote object is added to the quoteList and the adapter is
-	notified on the OnResponse callback
-	*/
-	public void includeMovieData(final List<Quote> quoteList, final QuoteAdapter adapter) {
-
-		MovieClient service = MovieClient.retrofit.create(MovieClient.class);
-		Call<Movie> call = service.getMovie(movieTitle.replace(' ', '+'));
-		final Quote q = this;
-
-		call.enqueue(new Callback<Movie>() {
-
-			@Override
-			public void onResponse(Call<Movie> call, Response<Movie> response) {
-
-				// Retrieve response object
-				movieData = response.body();
-				// Add it to quote list inside onResponse to avoid callback/threads synchronization
-				if (movieData.getPoster().equals("N/A") == false) {
-					quoteList.add(q);
-					adapter.notifyDataSetChanged();
-				}
-			}
-
-			@Override
-			public void onFailure(Call<Movie> call, Throwable t) {
-				t.printStackTrace();
-			}
-		});
-	}
 
 	public String getQuote() {
 		return quote;
+	}
+
+	public String getMovieTitle() {
+		return movieTitle;
 	}
 
 	public class Movie {

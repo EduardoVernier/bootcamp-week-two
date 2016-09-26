@@ -9,21 +9,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.iws.futuretalents.quotes.network.RandomQuoteClient;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-
 public class QuoteListFragment extends Fragment
 		implements QuoteAdapter.OnListFragmentInteractionListener {
 
-	private List<Quote> quoteList;
 	private QuoteAdapter adapter;
-	private RandomQuoteClient service;
 
 	/**
 	 * Mandatory empty constructor for the fragment manager to instantiate the
@@ -36,32 +25,7 @@ public class QuoteListFragment extends Fragment
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		quoteList = new ArrayList<Quote>();
-		adapter = new QuoteAdapter(quoteList, this, getContext());
-
-		fetchQuote(5);
-	}
-
-	private void fetchQuote(int n) {
-		service = RandomQuoteClient.retrofit.create(RandomQuoteClient.class);
-		for (int i = 0; i < n; i++) {
-			Call<Quote> call = service.getQuote();
-			call.enqueue(new QuoteCallback());
-		}
-	}
-
-	class QuoteCallback implements Callback<Quote> {
-
-		@Override
-		public void onResponse(Call<Quote> call, Response<Quote> response) {
-				Quote newQuote = response.body();
-				newQuote.includeMovieData(quoteList, adapter);
-		}
-
-		@Override
-		public void onFailure(Call<Quote> call, Throwable t) {
-				t.printStackTrace();
-		}
+		adapter = new QuoteAdapter(this, getContext());
 	}
 
 	@Override
