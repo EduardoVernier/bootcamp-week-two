@@ -1,6 +1,7 @@
 package com.iws.futuretalents.quotes;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -8,6 +9,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import org.parceler.Parcels;
 
 public class QuoteListFragment extends Fragment
 		implements QuoteAdapter.OnListFragmentInteractionListener {
@@ -45,6 +48,8 @@ public class QuoteListFragment extends Fragment
 	}
 
 	public void onListFragmentInteraction(Quote item) {
-
+		Intent intent = new Intent(getContext(), DetailActivity.class);
+		intent.putExtra("quote", Parcels.wrap(item));
+		startActivity(intent);
 	}
 }

@@ -19,6 +19,22 @@ android {
     }
 }
 
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        // replace with the current version of the Android plugin
+        classpath 'com.android.tools.build:gradle:2.2.0'
+        // the latest version of the android-apt plugin
+        classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'
+    }
+}
+
+apply plugin: 'com.android.application'
+apply plugin: 'com.neenbedankt.android-apt'
+
+
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
@@ -36,4 +52,6 @@ dependencies {
     compile 'com.github.bumptech.glide:glide:3.7.0'
     testCompile 'junit:junit:4.12'
     compile 'com.android.support.constraint:constraint-layout:1.0.0-alpha8'
+    compile 'org.parceler:parceler-api:1.1.1'
+    apt 'org.parceler:parceler:1.1.1'
 }

@@ -3,6 +3,11 @@ package com.iws.futuretalents.quotes;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import org.parceler.Parcel;
+
+// All members must be public in order for the Parceler lib to work :/
+// TODO: Clean getters and setters
+@Parcel
 public class Quote {
 
 	@SerializedName("quote")
@@ -10,7 +15,7 @@ public class Quote {
 	public String quote;
 	@SerializedName("author")
 	@Expose
-	private String movieTitle;
+	public String movieTitle;
 	public Movie movieData;
 
 	public String getQuote() {
@@ -21,68 +26,33 @@ public class Quote {
 		return movieTitle;
 	}
 
-	public class Movie {
+	@Parcel
+	public static class Movie {
 
 		@SerializedName("Title")
 		@Expose
-		private String title;
+		public String title;
 		@SerializedName("Year")
 		@Expose
-		private String year;
-		@SerializedName("Rated")
-		@Expose
-		private String rated;
-		@SerializedName("Released")
-		@Expose
-		private String released;
-		@SerializedName("Runtime")
-		@Expose
-		private String runtime;
-		@SerializedName("Genre")
-		@Expose
-		private String genre;
+		public String year;
 		@SerializedName("Director")
 		@Expose
-		private String director;
+		public String director;
 		@SerializedName("Writer")
 		@Expose
-		private String writer;
+		public String writer;
 		@SerializedName("Actors")
 		@Expose
-		private String actors;
+		public String actors;
 		@SerializedName("Plot")
 		@Expose
-		private String plot;
-		@SerializedName("Language")
-		@Expose
-		private String language;
-		@SerializedName("Country")
-		@Expose
-		private String country;
-		@SerializedName("Awards")
-		@Expose
-		private String awards;
+		public String plot;
 		@SerializedName("Poster")
 		@Expose
-		private String poster;
-		@SerializedName("Metascore")
-		@Expose
-		private String metascore;
+		public String poster;
 		@SerializedName("imdbRating")
 		@Expose
-		private String imdbRating;
-		@SerializedName("imdbVotes")
-		@Expose
-		private String imdbVotes;
-		@SerializedName("imdbID")
-		@Expose
-		private String imdbID;
-		@SerializedName("Type")
-		@Expose
-		private String type;
-		@SerializedName("Response")
-		@Expose
-		private String response;
+		public String imdbRating;
 
 		public String getTitle() {
 			return title;
@@ -98,38 +68,6 @@ public class Quote {
 
 		public void setYear(String year) {
 			this.year = year;
-		}
-
-		public String getRated() {
-			return rated;
-		}
-
-		public void setRated(String rated) {
-			this.rated = rated;
-		}
-
-		public String getReleased() {
-			return released;
-		}
-
-		public void setReleased(String released) {
-			this.released = released;
-		}
-
-		public String getRuntime() {
-			return runtime;
-		}
-
-		public void setRuntime(String runtime) {
-			this.runtime = runtime;
-		}
-
-		public String getGenre() {
-			return genre;
-		}
-
-		public void setGenre(String genre) {
-			this.genre = genre;
 		}
 
 		public String getDirector() {
@@ -164,44 +102,12 @@ public class Quote {
 			this.plot = plot;
 		}
 
-		public String getLanguage() {
-			return language;
-		}
-
-		public void setLanguage(String language) {
-			this.language = language;
-		}
-
-		public String getCountry() {
-			return country;
-		}
-
-		public void setCountry(String country) {
-			this.country = country;
-		}
-
-		public String getAwards() {
-			return awards;
-		}
-
-		public void setAwards(String awards) {
-			this.awards = awards;
-		}
-
 		public String getPoster() {
 			return poster;
 		}
 
 		public void setPoster(String poster) {
 			this.poster = poster;
-		}
-
-		public String getMetascore() {
-			return metascore;
-		}
-
-		public void setMetascore(String metascore) {
-			this.metascore = metascore;
 		}
 
 		public String getImdbRating() {
@@ -211,38 +117,5 @@ public class Quote {
 		public void setImdbRating(String imdbRating) {
 			this.imdbRating = imdbRating;
 		}
-
-		public String getImdbVotes() {
-			return imdbVotes;
-		}
-
-		public void setImdbVotes(String imdbVotes) {
-			this.imdbVotes = imdbVotes;
-		}
-
-		public String getImdbID() {
-			return imdbID;
-		}
-
-		public void setImdbID(String imdbID) {
-			this.imdbID = imdbID;
-		}
-
-		public String getType() {
-			return type;
-		}
-
-		public void setType(String type) {
-			this.type = type;
-		}
-
-		public String getResponse() {
-			return response;
-		}
-
-		public void setResponse(String response) {
-			this.response = response;
-		}
-
 	}
 }
