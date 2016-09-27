@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
-* {@link RecyclerView.Adapter} that can display a {@link Quote} and makes a call to the
+ * {@link RecyclerView.Adapter} that can display a {@link Quote} and makes a call to the
  * specified {@link OnListFragmentInteractionListener}.
  */
 public class QuoteAdapter extends RecyclerView.Adapter<QuoteAdapter.ViewHolder> {
@@ -27,6 +27,7 @@ public class QuoteAdapter extends RecyclerView.Adapter<QuoteAdapter.ViewHolder> 
 	private QuoteService quoteService;
 
 	public QuoteAdapter(OnListFragmentInteractionListener listener, Context context) {
+
 		this.listener = listener;
 		this.context = context;
 		quoteList = new ArrayList<Quote>();
@@ -71,9 +72,6 @@ public class QuoteAdapter extends RecyclerView.Adapter<QuoteAdapter.ViewHolder> 
 		}
 	}
 
-
-
-
 	@Override
 	public int getItemCount() {
 		return quoteList.size();
@@ -95,7 +93,7 @@ public class QuoteAdapter extends RecyclerView.Adapter<QuoteAdapter.ViewHolder> 
 		}
 	}
 
-	public interface OnListFragmentInteractionListener {
+	interface OnListFragmentInteractionListener {
 		void onListFragmentInteraction(Quote item);
 	}
 

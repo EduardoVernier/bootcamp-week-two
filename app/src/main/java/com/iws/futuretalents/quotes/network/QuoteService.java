@@ -73,7 +73,7 @@ public class QuoteService {
 				}
 				else {
 					// Invalidate quote if can't get poster url or if it's a repeated quote
-					fetchQuote(1);
+					fetgit addchQuote(1);
 				}
 			}
 
@@ -92,7 +92,6 @@ public class QuoteService {
 				return false;
 			}
 		}
-
 		// Check for invalid poster urls
 		return movieData.getPoster() != null && !movieData.getPoster().equals("N/A");
 	}

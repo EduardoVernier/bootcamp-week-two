@@ -48,6 +48,7 @@ public class QuoteListFragment extends Fragment
 	}
 
 	public void onListFragmentInteraction(Quote item) {
+
 		Intent intent = new Intent(getContext(), DetailActivity.class);
 		intent.putExtra("quote", Parcels.wrap(item));
 		startActivity(intent);

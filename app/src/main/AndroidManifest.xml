@@ -18,6 +18,11 @@
             </intent-filter>
         </activity>
         <activity android:name=".DetailActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.iws.futuretalents.quotes.MainActivity"/>
+        </activity>
+        <activity android:name=".FullPosterActivity">
         </activity>
     </application>
 
