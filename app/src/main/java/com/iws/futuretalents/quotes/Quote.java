@@ -2,6 +2,7 @@ package com.iws.futuretalents.quotes;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+import com.iws.futuretalents.quotes.network.UserQuoteBuilder;
 
 import org.parceler.Parcel;
 
@@ -9,12 +10,28 @@ import org.parceler.Parcel;
 @Parcel
 public class Quote {
 
+	public Quote() {
+	}
+
+	public Quote(UserQuoteBuilder builder) {
+		this.quote = builder.quote;
+		this.movieTitle = builder.movie;
+		this.movieData = new Quote.Movie();
+		this.movieData.title = builder.movie;
+		this.movieData.year = builder.year;
+		this.movieData.plot = builder.plot;
+		this.movieData.actors = builder.actors;
+		this.movieData.director = builder.director;
+		this.movieData.writer = builder.writer;
+	}
+
 	@SerializedName("quote")
 	@Expose
 	public String quote;
 	@SerializedName("author")
 	@Expose
 	public String movieTitle;
+
 	public Movie movieData;
 
 	public String getQuote() {
@@ -49,9 +66,6 @@ public class Quote {
 		@SerializedName("Poster")
 		@Expose
 		public String poster;
-		@SerializedName("imdbRating")
-		@Expose
-		public String imdbRating;
 
 		public String getTitle() {
 			return title;
@@ -107,14 +121,6 @@ public class Quote {
 
 		public void setPoster(String poster) {
 			this.poster = poster;
-		}
-
-		public String getImdbRating() {
-			return imdbRating + "\n";
-		}
-
-		public void setImdbRating(String imdbRating) {
-			this.imdbRating = imdbRating;
 		}
 	}
 }

@@ -11,9 +11,12 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.iws.futuretalents.quotes.network.QuoteService;
+import com.iws.futuretalents.quotes.network.UserQuoteBuilder;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Observable;
+import java.util.Observer;
 
 /**
  * {@link RecyclerView.Adapter} that can display a {@link Quote} and makes a call to the
@@ -31,8 +34,27 @@ public class QuoteAdapter extends RecyclerView.Adapter<QuoteAdapter.ViewHolder> 
 		this.listener = listener;
 		this.context = context;
 		quoteList = new ArrayList<Quote>();
-		quoteService = new QuoteService(quoteList, this);
-		quoteService.fetchQuote(5);
+
+		// Make quote service observable
+		quoteService = QuoteService.getInstance();
+		quoteService.init(quoteList);
+		quoteService.addObserver(new Observer() {
+			@Override
+			public void update(Observable o, Object arg) {
+				QuoteAdapter.this.notifyDataSetChanged();
+			}
+		});
+
+		// Use builder
+		Quote userQuote = new UserQuoteBuilder("Blablabla", "Blublu")
+				.year("2012")
+				.actors("A. Adam, B. Ben.")
+				.director("C. Calvin")
+				.writer("D. Daniel")
+				.plot("Absasfbahsfafas faskfjaksjf laksjfdalskfj as lkajsfdasf")
+				.build();
+
+		quoteService.addQuote(userQuote);
 	}
 
 	@Override
@@ -59,8 +81,6 @@ public class QuoteAdapter extends RecyclerView.Adapter<QuoteAdapter.ViewHolder> 
 			@Override
 			public void onClick(View v) {
 				if (null != listener) {
-					// Notify the active callbacks interface (the activity, if the
-					// fragment is attached to one) that an item has been selected.
 					listener.onListFragmentInteraction(holder.item);
 				}
 			}

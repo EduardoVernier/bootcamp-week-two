@@ -2,25 +2,37 @@ package com.iws.futuretalents.quotes.network;
 
 
 import com.iws.futuretalents.quotes.Quote;
-import com.iws.futuretalents.quotes.QuoteAdapter;
 
 import java.util.List;
+import java.util.Observable;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class QuoteService {
+public class QuoteService extends Observable {
 
-	private QuoteAdapter adapter;
+	private static QuoteService instance;
 	private RandomQuoteClient service;
 	private List<Quote> quoteList;
 
-	public QuoteService(List<Quote> quoteList, QuoteAdapter adapter) {
+	private QuoteService() {
+	}
+
+	public static QuoteService getInstance() {
+
+		if (instance == null) {
+			instance = new QuoteService();
+		}
+		return instance;
+	}
+
+	public void init(List<Quote> quoteList) {
 
 		this.quoteList = quoteList;
-		this.adapter = adapter;
 		service = RandomQuoteClient.retrofit.create(RandomQuoteClient.class);
+
+		fetchQuote(5);
 	}
 
 	public void fetchQuote(int n) {
@@ -30,6 +42,13 @@ public class QuoteService {
 			Call<Quote> call = service.getQuote();
 			call.enqueue(new QuoteCallback());
 		}
+	}
+
+	public void addQuote(Quote quote) {
+		quoteList.add(quote);
+		// Notify adapter of new Quote
+		setChanged();
+		notifyObservers();
 	}
 
 	private class QuoteCallback implements Callback<Quote> {
@@ -68,8 +87,7 @@ public class QuoteService {
 				if (validMovieData(movieData, newQuote.getQuote())) {
 					// Add it to quote list inside onResponse to avoid callback/threads synchronization
 					newQuote.movieData = movieData;
-					quoteList.add(newQuote);
-					adapter.notifyDataSetChanged();
+					addQuote(newQuote);
 				}
 				else {
 					// Invalidate quote if can't get poster url or if it's a repeated quote
